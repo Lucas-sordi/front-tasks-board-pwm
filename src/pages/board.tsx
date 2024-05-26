@@ -29,7 +29,7 @@ export default function Board() {
     <div className="flex flex-col h-full min-h-screen">
       <Navbar />
       <div className="flex flex-wrap gap-y-1 justify-end p-4 mt-12 md:mr-10 md:ml-10 sm:mr-2 sm:ml-2">
-          <button className="px-4 py-2 bg-palette-500 text-palette-100 rounded-lg border border-palette-400 hover:bg-palette-600 md:mr-4 sm:mr-2">
+          <button className="px-4 py-2 bg-palette-500 text-palette-100 rounded-lg border border-palette-400 hover:bg-palette-600 hover:scale-101 md:mr-4 sm:mr-2">
             Criar Task Raiz
           </button>
         <Filter onTasksFetched={handleTasksFetched} />
