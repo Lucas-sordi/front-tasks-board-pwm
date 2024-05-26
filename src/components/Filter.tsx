@@ -25,7 +25,7 @@ export default function Filter({ onTasksFetched }: FilterProps) {
           placeholder="Pesquise por id ou palavra-chave..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-grow bg-palette-50 p-2 border border-palette-300 rounded-l-lg focus:outline-none placeholder-palette-700 text-palette-950"
+          className="flex-grow bg-palette-50 p-2 border border-palette-300 rounded-l-lg focus:outline-none focus:border-palette-100 placeholder-palette-700 text-palette-950"
         />
         <button
           onClick={handleSearch}
