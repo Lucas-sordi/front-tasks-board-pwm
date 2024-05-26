@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Filter from '../components/Filter';
 import { TaskDTO } from '@/interfaces/Task.dto';
+import TaskService from '@/services/taskService';
 
 export default function Board() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
@@ -9,6 +10,19 @@ export default function Board() {
   const handleTasksFetched = (data: TaskDTO[]) => {
     setTasks(data);
   };
+  
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const data = await TaskService.filterTasks('');
+        setTasks(data);
+      } catch (e) {
+        console.error('Failed to fetch tasks:', e);
+      };
+    };
+
+    fetchTasks();
+  }, []);
 
   return (
     <div className="flex flex-col h-screen">
@@ -31,4 +45,4 @@ export default function Board() {
       </div>
     </div>
   );
-}
+};
