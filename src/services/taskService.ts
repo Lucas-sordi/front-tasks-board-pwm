@@ -12,4 +12,13 @@ export default class TaskService {
       throw e;
     };
   };
+
+  static async deleteTask(taskId: number) {
+    try {
+      await axios.delete(`${baseUrl}/${taskId}`);
+    } catch (e) {
+      console.error('Error deleting task:', e);
+      throw e;
+    };
+  };
 };

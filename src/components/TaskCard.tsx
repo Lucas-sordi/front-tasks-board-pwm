@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TaskDTO } from '@/interfaces/Task.dto';
+import TaskService from '@/services/taskService';
 
 interface TaskCardProps {
   task: TaskDTO;
+  onDeleteTask: () => void;
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
+export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +28,16 @@ export default function TaskCard({ task }: TaskCardProps) {
     };
   }, []);
 
+  const handleDeleteTask = async () => {
+    try {
+      setIsMenuOpen(false);
+      await TaskService.deleteTask(task.id);
+      onDeleteTask();
+    } catch (e) {
+      console.error('Error deleting task:', e);
+    }
+  };
+
   return (
     <div className="relative bg-palette-50 shadow-lg rounded-md p-4 mb-4 border-l-8 border-palette-700 hover:scale-1005 cursor-pointer">
       <div className="flex items-center justify-between">
@@ -41,12 +53,12 @@ export default function TaskCard({ task }: TaskCardProps) {
             onClick={toggleMenu}
           />
           {isMenuOpen && (
-            <div className="absolute right-0 mt-2 w-32 bg-palette-50 border rounded-md shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-32 bg-palette-50 border rounded-md shadow-lg z-10 text-sm">
               <div className="flex items-center p-2 hover:bg-palette-100 cursor-pointer">
                 <img src="/open.svg" alt="Open Icon" className="w-4 h-4 mr-2" />
                 <span>Abrir</span>
               </div>
-              <div className="flex items-center p-2 hover:bg-palette-100 cursor-pointer">
+              <div className="flex items-center p-2 hover:bg-palette-100 cursor-pointer" onClick={handleDeleteTask}>
                 <img src="/delete.svg" alt="Delete Icon" className="w-4 h-4 mr-2" />
                 <span>Excluir</span>
               </div>

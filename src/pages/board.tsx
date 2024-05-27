@@ -12,19 +12,23 @@ export default function Board() {
     setTasks(data);
   };
   
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const data = await TaskService.filterTasks('');
-        setTasks(data);
-      } catch (e) {
-        console.error('Failed to fetch tasks:', e);
-      };
+  const fetchTasks = async () => {
+    try {
+      const data = await TaskService.filterTasks('');
+      setTasks(data);
+    } catch (e) {
+      console.error('Failed to fetch tasks:', e);
     };
+  };
 
+  useEffect(() => {
     fetchTasks();
   }, []);
 
+  const handleDeleteTask = async () => {
+    fetchTasks();
+  };
+  
   return (
     <div className="flex flex-col h-full min-h-screen">
       <Navbar />
@@ -38,7 +42,7 @@ export default function Board() {
         <div className="mt-8">
           {tasks.length > 0 ? (
             tasks.map((task: TaskDTO, index) => (
-              <TaskCard task={task} key={index}  />
+              <TaskCard task={task} key={index} onDeleteTask={handleDeleteTask} />
             ))
           ) : (
             <div></div>
