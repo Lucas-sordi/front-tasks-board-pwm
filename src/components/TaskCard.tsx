@@ -28,7 +28,7 @@ export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
       onDeleteTask();
     } catch (e) {
       console.error('Error deleting task:', e);
-    };
+    }
   };
 
   useEffect(() => {
@@ -67,15 +67,17 @@ export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
         </div>
       </div>
       <p className="text-xs text-palette-300 mt-2">Parent</p>
-      <div className="flex items-center mt-2">
-        <img src="/tag.svg" alt="Tag Icon" className="w-3 h-3 mr-1" />
-        <p className="text-sm text-palette-500">{task.taskType.type}</p>
+      <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center">
+          <img src="/tag.svg" alt="Tag Icon" className="w-3 h-3 mr-1" />
+          <p className="text-sm text-palette-500">{task.taskType.type}</p>
+        </div>
+        <img
+          src="/add.svg"
+          alt="Add Icon"
+          className="w-4 h-4 cursor-pointer hover:bg-palette-200 rounded-md md:ml-2"
+        />
       </div>
-      <img
-        src="/add.svg"
-        alt="Add Icon"
-        className="absolute right-4 bottom-4 w-4 h-4 cursor-pointer hover:bg-palette-200 rounded-md md:ml-2"
-      />
     </div>
   );
 };
