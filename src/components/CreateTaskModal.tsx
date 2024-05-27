@@ -80,49 +80,52 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div ref={modalRef} className="bg-palette-100 p-6 rounded-2xl shadow-xl w-96 relative">
+      <div ref={modalRef} className="bg-palette-100 p-8 rounded-2xl shadow-xl w-2/5 h-1/2 flex flex-col relative">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Criar Task</h2>
           <button onClick={handleClose} className="w-6 h-6">
             <img src="/x-mark.svg" alt="Close Icon" className="w-full h-full" />
           </button>
         </div>
-        <div className="mb-4">
-          <label className="block text-palette-700">Título</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full border border-palette-300 p-2 rounded mt-1 focus:outline-none text-sm focus:border-palette-700"
-          />
+        <div className="flex flex-wrap mb-4 gap-4">
+          <div className="grow">
+            <label className="block text-palette-700">Título</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="block w-full border border-palette-300 p-2 rounded mt-1 focus:outline-none text-sm focus:border-palette-700"
+            />
+          </div>
+          <div>
+            <label className="block text-palette-700">Tipo de Task</label>
+            <select
+              value={typeId || ''}
+              onChange={(e) => setTypeId(Number(e.target.value))}
+             className="w-full border border-palette-300 p-2 text-sm rounded mt-1 focus:outline-none focus:border-palette-700"
+            >
+              <option value="" disabled>Selecione o tipo</option>
+              {taskTypes.map((type: any) => (
+                <option key={type.id} value={type.id}>
+                  {type.type}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div className="mb-4">
+        <div className="mb-12 flex-grow">
           <label className="block text-palette-700">Descrição</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full border border-palette-300 p-2 resize-none rounded mt-1 text-sm focus:outline-none focus:border-palette-700"
+            className="w-full h-full border border-palette-300 p-2 resize-none rounded mt-1 text-sm focus:outline-none focus:border-palette-700"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-palette-700">Tipo de Task</label>
-          <select
-            value={typeId || ''}
-            onChange={(e) => setTypeId(Number(e.target.value))}
-            className="w-full border border-palette-300 p-2 text-sm rounded mt-1 focus:outline-none focus:border-palette-700"
-          >
-            <option value="" disabled>Selecione o tipo</option>
-            {taskTypes.map((type: any) => (
-              <option key={type.id} value={type.id}>
-                {type.type}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex justify-end">
+
+        <div className="flex flex-wrap justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-paletteRed-800 text-palette-100 rounded-xl mr-2 hover:bg-paletteRed-900"
+            className="px-4 py-2 bg-paletteRed-800 text-palette-100 rounded-xl hover:bg-paletteRed-900"
           >
             Cancelar
           </button>
