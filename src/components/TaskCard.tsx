@@ -5,7 +5,7 @@ import TaskService from '@/services/taskService';
 interface TaskCardProps {
   task: TaskDTO;
   onDeleteTask: () => void;
-}
+};
 
 export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,13 +21,6 @@ export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   const handleDeleteTask = async () => {
     try {
       setIsMenuOpen(false);
@@ -35,8 +28,15 @@ export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
       onDeleteTask();
     } catch (e) {
       console.error('Error deleting task:', e);
-    }
+    };
   };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="relative bg-palette-50 shadow-lg rounded-md p-4 mb-4 border-l-8 border-palette-700 hover:scale-1005 cursor-pointer">
@@ -78,4 +78,4 @@ export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
       />
     </div>
   );
-}
+};
