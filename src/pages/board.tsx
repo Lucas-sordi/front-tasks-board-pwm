@@ -5,10 +5,13 @@ import Filter from '@/components/Filter';
 import { TaskDTO } from '@/interfaces/Task.dto';
 import TaskService from '@/services/taskService';
 import CreateTaskModal from '@/components/CreateTaskModal';
+import ViewTaskModal from '@/components/ViewTaskModal'; // Import ViewTaskModal
 
 export default function Board() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
+  const [isViewTaskModalOpen, setIsViewTaskModalOpen] = useState(false); // State for ViewTaskModal
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null); // State for selected task ID
 
   const handleTasksFetched = (data: TaskDTO[]) => {
     setTasks(data);
@@ -35,12 +38,26 @@ export default function Board() {
     fetchTasks();
   };
 
+  const handleUpdateTask = async () => {
+    fetchTasks();
+  };
+
   const openCreateTaskModal = () => {
     setIsCreateTaskModalOpen(true);
   };
 
   const closeCreateTaskModal = () => {
     setIsCreateTaskModalOpen(false);
+  };
+
+  const openViewTaskModal = (taskId: number) => {
+    setSelectedTaskId(taskId);
+    setIsViewTaskModalOpen(true);
+  };
+
+  const closeViewTaskModal = () => {
+    setSelectedTaskId(null);
+    setIsViewTaskModalOpen(false);
   };
 
   return (
@@ -59,7 +76,7 @@ export default function Board() {
         <div className="mt-8">
           {tasks.length > 0 ? (
             tasks.map((task: TaskDTO, index) => (
-              <TaskCard task={task} key={index} onDeleteTask={handleDeleteTask} />
+              <TaskCard task={task} key={index} onDeleteTask={handleDeleteTask} onOpenTask={openViewTaskModal} />
             ))
           ) : (
             <div className="p-24">
@@ -71,6 +88,9 @@ export default function Board() {
         </div>
       </div>
       <CreateTaskModal isOpen={isCreateTaskModalOpen} onClose={closeCreateTaskModal} onCreate={handleCreateTask} />
+      {selectedTaskId !== null && (
+        <ViewTaskModal isOpen={isViewTaskModalOpen} onClose={closeViewTaskModal} onUpdate={handleUpdateTask} taskId={selectedTaskId}/>
+      )}
     </div>
   );
-};
+}

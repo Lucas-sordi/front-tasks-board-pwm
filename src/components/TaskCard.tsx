@@ -5,9 +5,10 @@ import TaskService from '@/services/taskService';
 interface TaskCardProps {
   task: TaskDTO;
   onDeleteTask: () => void;
+  onOpenTask: (taskId: number) => void;
 };
 
-export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
+export default function TaskCard({ task, onDeleteTask, onOpenTask }: TaskCardProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +55,7 @@ export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
           />
           {isMenuOpen && (
             <div className="absolute right-0 mt-2 w-32 bg-palette-50 border rounded-md shadow-lg z-10 text-sm">
-              <div className="flex items-center p-2 hover:bg-palette-100 cursor-pointer">
+              <div className="flex items-center p-2 hover:bg-palette-100 cursor-pointer" onClick={() => onOpenTask(task.id)}>
                 <img src="/open.svg" alt="Open Icon" className="w-4 h-4 mr-2" />
                 <span>Abrir</span>
               </div>
@@ -80,4 +81,4 @@ export default function TaskCard({ task, onDeleteTask }: TaskCardProps) {
       </div>
     </div>
   );
-};
+}
