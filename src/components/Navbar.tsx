@@ -9,7 +9,7 @@ export default function Navbar() {
       </Link>
       <div className="md:mr-20">
         <Link href="/board">
-          <span className="text-palette-100 px-4 py-3 border border-transparent rounded-lg transition cursor-pointer hover:border-palette-50">Acessar board</span>
+          <span className="text-palette-100 px-4 py-3 border inline-block border-transparent rounded-lg transition cursor-pointer hover:border-palette-50">Acessar board</span>
         </Link>
         <Link href="/about">
           <span className="text-palette-100 px-4 py-2 md:ml-4 border border-transparent rounded-lg transition cursor-pointer hover:border-palette-50">Sobre</span>
