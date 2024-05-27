@@ -14,6 +14,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
   const [description, setDescription] = useState('');
   const [typeId, setTypeId] = useState<number | null>(null);
   const [taskTypes, setTaskTypes] = useState([]);
+  const [taskTypeError, setTaskTypeError] = useState('');
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,8 +30,11 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
   }, []);
 
   const handleCreateTask = async () => {
-    if (typeId === null) return;
-
+    if (typeId === null) {
+      setTaskTypeError('Selecione o tipo de task.'); 
+      return;
+    };
+    
     const newTask: CreateTaskDTO = {
       name,
       description,
@@ -51,6 +55,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
     setName('');
     setDescription('');
     setTypeId(null);
+    setTaskTypeError('');
     onClose();
   };
 
@@ -59,6 +64,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
       setName('');
       setDescription('');
       setTypeId(null);
+      setTaskTypeError('');
     }
   }, [isOpen]);
 
@@ -101,7 +107,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
             <label className="block text-palette-700">Tipo de Task</label>
             <select
               value={typeId || ''}
-              onChange={(e) => setTypeId(Number(e.target.value))}
+              onChange={(e) => {setTypeId(Number(e.target.value)); setTaskTypeError('')}}
              className="w-full border border-palette-300 p-2 text-sm rounded mt-1 focus:outline-none focus:border-palette-700"
             >
               <option value="" disabled>Selecione o tipo</option>
@@ -111,6 +117,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
                 </option>
               ))}
             </select>
+            {taskTypeError && <p className="text-paletteRed-800 text-xs ">{taskTypeError}</p>}
           </div>
         </div>
         <div className="mb-12 flex-grow">

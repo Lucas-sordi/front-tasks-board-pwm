@@ -62,8 +62,8 @@ export default function Board() {
               <TaskCard task={task} key={index} onDeleteTask={handleDeleteTask} />
             ))
           ) : (
-            <div className="flex flex-col flex-grow items-center justify-center p-24">
-              <p className="mt-4 text-lg text-palette-900">
+            <div className="p-24">
+              <p className="text-lg text-palette-900">
                 Nenhuma task encontrada.
               </p>
             </div>
