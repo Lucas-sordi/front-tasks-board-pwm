@@ -1,3 +1,4 @@
+import { CreateTaskDTO } from '@/interfaces/CreateTask.dto';
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:3000/task';
@@ -13,6 +14,16 @@ export default class TaskService {
     };
   };
 
+  static async createTask(task: CreateTaskDTO) {
+    try {
+      const response = await axios.post(baseUrl, task);
+      return response.data;
+    } catch (e) {
+      console.error('Error creating task:', e);
+      throw e;
+    };
+  };
+  
   static async deleteTask(taskId: number) {
     try {
       await axios.delete(`${baseUrl}/${taskId}`);
