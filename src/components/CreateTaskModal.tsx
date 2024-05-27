@@ -14,7 +14,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
   const [description, setDescription] = useState('');
   const [typeId, setTypeId] = useState<number | null>(null);
   const [taskTypes, setTaskTypes] = useState([]);
-  const [taskTypeError, setTaskTypeError] = useState('');
+  const [taskTypeError, setTaskTypeError] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,10 +31,10 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
 
   const handleCreateTask = async () => {
     if (typeId === null) {
-      setTaskTypeError('Selecione o tipo de task.'); 
+      setTaskTypeError(true);
       return;
     };
-    
+
     const newTask: CreateTaskDTO = {
       name,
       description,
@@ -55,7 +55,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
     setName('');
     setDescription('');
     setTypeId(null);
-    setTaskTypeError('');
+    setTaskTypeError(false);
     onClose();
   };
 
@@ -64,7 +64,7 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
       setName('');
       setDescription('');
       setTypeId(null);
-      setTaskTypeError('');
+      setTaskTypeError(false);
     }
   }, [isOpen]);
 
@@ -107,8 +107,11 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
             <label className="block text-palette-700">Tipo de Task</label>
             <select
               value={typeId || ''}
-              onChange={(e) => {setTypeId(Number(e.target.value)); setTaskTypeError('')}}
-             className="w-full border border-palette-300 p-2 text-sm rounded mt-1 focus:outline-none focus:border-palette-700"
+              onChange={(e) => { setTypeId(Number(e.target.value)); setTaskTypeError(false) }}
+              className={
+                `w-full border border-palette-300 p-2 text-sm rounded mt-1 focus:outline-none focus:border-palette-700 
+                ${taskTypeError ? 'border-2 border-paletteRed-800 focus:border-paletteRed-800' : null}`
+              }
             >
               <option value="" disabled>Selecione o tipo</option>
               {taskTypes.map((type: any) => (
@@ -117,7 +120,6 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
                 </option>
               ))}
             </select>
-            {taskTypeError && <p className="text-paletteRed-800 text-xs ">{taskTypeError}</p>}
           </div>
         </div>
         <div className="mb-12 flex-grow">
@@ -128,7 +130,6 @@ export default function CreateTaskModal({ isOpen, onClose, onCreate }: CreateTas
             className="w-full h-full border border-palette-300 p-2 resize-none rounded mt-1 text-sm focus:outline-none focus:border-palette-700"
           />
         </div>
-
         <div className="flex flex-wrap justify-end gap-2">
           <button
             onClick={onClose}
