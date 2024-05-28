@@ -8,7 +8,7 @@ export default function Navbar() {
         <h1 className="text-palette-100 text-3xl md:ml-20 transition-transform hover:scale-125 cursor-pointer">Board</h1>
       </Link>
       <div className="md:mr-20">
-        <Link href="/board">
+        <Link href="/">
           <span className="text-palette-100 px-4 py-3 border inline-block border-transparent rounded-lg transition cursor-pointer hover:border-palette-50">Acessar board</span>
         </Link>
         <Link href="/about">

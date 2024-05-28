@@ -72,8 +72,8 @@ export default function Board() {
         </button>
         <Filter onTasksFetched={handleTasksFetched} />
       </div>
-      <div className="flex flex-col flex-grow items-center justify-center">
-        <div className="mt-8">
+      <div className="flex flex-col flex-grow items-center">
+        <div className="mt-16">
           {tasks.length > 0 ? (
             tasks.map((task: TaskDTO, index) => (
               <TaskCard task={task} key={index} onDeleteTask={handleDeleteTask} onOpenTask={openViewTaskModal} />
